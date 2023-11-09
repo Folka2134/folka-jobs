@@ -35,11 +35,8 @@ const firebaseConfig = {
   measurementId: "G-6DKBY9SF37",
 };
 
-// init firebase app
 initializeApp(firebaseConfig);
-// init services
 const db = getFirestore();
-// collection ref
 const colRef = collection(db, "jobs");
 
 const Jobs = () => {
@@ -64,7 +61,6 @@ const Jobs = () => {
             formattedDate: "",
           }));
 
-          // Format the timestamp and update the job postings
           const formattedJobPostings: JobPosting[] = jobPostings.map((job) => ({
             ...job,
             formattedDate: new Date(
@@ -101,7 +97,6 @@ const Jobs = () => {
     <div className="b flex w-full flex-col items-center">
       <h1 className="text-2xl font-medium">Jobs</h1>
       <p className="flex w-full justify-end">Post Job</p>
-      {/* loop over jobs from database */}
       {jobs.map((doc) => (
         <div
           key={doc.id}
