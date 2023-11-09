@@ -47,52 +47,43 @@ const Jobs = () => {
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    // const fetchData = async () => {
-    //   try {
-    //     const response = getDocs(colRef);
+    const fetchData = async () => {
+      try {
+        await getDocs(colRef).then((snapshot) => {
+          const jobPostings: JobPosting[] = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            companyName: doc.data().companyName,
+            title: doc.data().title,
+            description: doc.data().description,
+            roles: doc.data().roles,
+            roleType: doc.data().roleType,
+            image: doc.data().image,
+            location: doc.data().location,
+            featured: doc.data().featured,
+            createdAt: doc.data().createdAt,
+            formattedDate: "",
+          }));
 
-    //     const jobPostings: Job[] = response.doc.map((doc) => {
-    //       id: doc.id
-    //       companyName: doc.
-    //     });
+          // Format the timestamp and update the job postings
+          const formattedJobPostings: JobPosting[] = jobPostings.map((job) => ({
+            ...job,
+            formattedDate: new Date(
+              job.createdAt.seconds * 1000,
+            ).toLocaleDateString(),
+          }));
 
-    //     setJobs(data.docs);
-    //   } catch (error) {
-    //     console.error("Error fetching countries:", error);
-    //     setError(
-    //       error instanceof Error
-    //         ? error
-    //         : new Error("An unexpected error occured"),
-    //     );
-    //   }
-    // };
-
-    // fetchData();
-    getDocs(colRef).then((snapshot) => {
-      const jobPostings: JobPosting[] = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        companyName: doc.data().companyName,
-        title: doc.data().title,
-        description: doc.data().description,
-        roles: doc.data().roles,
-        roleType: doc.data().roleType,
-        image: doc.data().image,
-        location: doc.data().location,
-        featured: doc.data().featured,
-        createdAt: doc.data().createdAt,
-        formattedDate: "",
-      }));
-
-      // Format the timestamp and update the job postings
-      const formattedJobPostings: JobPosting[] = jobPostings.map((job) => ({
-        ...job,
-        formattedDate: new Date(
-          job.createdAt.seconds * 1000,
-        ).toLocaleDateString(),
-      }));
-
-      setJobs(formattedJobPostings);
-    });
+          setJobs(formattedJobPostings);
+        });
+      } catch (error) {
+        console.error("Error fetching countries:", error);
+        setError(
+          error instanceof Error
+            ? error
+            : new Error("An unexpected error occured"),
+        );
+      }
+    };
+    fetchData();
   }, []);
 
   function howOldIsJob(formattedDate: string): number {
