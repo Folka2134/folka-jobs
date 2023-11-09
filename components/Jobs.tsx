@@ -7,17 +7,21 @@ import manage from "../assets/images/manage.svg";
 import { collection, getDocs, getFirestore } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
-interface Job {
+interface JobPosting {
   id: string;
   companyName: string;
   title: string;
   description: string;
   roles: string[];
+  roleType: string;
   image: string;
   location: string;
   featured: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: {
+    seconds: number;
+    nanoseconds: number;
+  };
+  formattedDate: string;
 }
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -39,29 +43,66 @@ const db = getFirestore();
 const colRef = collection(db, "jobs");
 
 const Jobs = () => {
-  const [jobs, setJobs] = useState<Job[]>([]);
+  const [jobs, setJobs] = useState<JobPosting[]>([]);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = getDocs(colRef);
+    // const fetchData = async () => {
+    //   try {
+    //     const response = getDocs(colRef);
 
-        const data = await response;
+    //     const jobPostings: Job[] = response.doc.map((doc) => {
+    //       id: doc.id
+    //       companyName: doc.
+    //     });
 
-        setJobs(data.docs);
-      } catch (error) {
-        console.error("Error fetching countries:", error);
-        setError(
-          error instanceof Error
-            ? error
-            : new Error("An unexpected error occured"),
-        );
-      }
-    };
+    //     setJobs(data.docs);
+    //   } catch (error) {
+    //     console.error("Error fetching countries:", error);
+    //     setError(
+    //       error instanceof Error
+    //         ? error
+    //         : new Error("An unexpected error occured"),
+    //     );
+    //   }
+    // };
 
-    fetchData();
+    // fetchData();
+    getDocs(colRef).then((snapshot) => {
+      const jobPostings: JobPosting[] = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        companyName: doc.data().companyName,
+        title: doc.data().title,
+        description: doc.data().description,
+        roles: doc.data().roles,
+        roleType: doc.data().roleType,
+        image: doc.data().image,
+        location: doc.data().location,
+        featured: doc.data().featured,
+        createdAt: doc.data().createdAt,
+        formattedDate: "",
+      }));
+
+      // Format the timestamp and update the job postings
+      const formattedJobPostings: JobPosting[] = jobPostings.map((job) => ({
+        ...job,
+        formattedDate: new Date(
+          job.createdAt.seconds * 1000,
+        ).toLocaleDateString(),
+      }));
+
+      setJobs(formattedJobPostings);
+    });
   }, []);
+
+  function howOldIsJob(formattedDate: string): number {
+    const jobDate = new Date(formattedDate);
+    const currentDate = new Date();
+    const differenceInMilliseconds = currentDate.getTime() - jobDate.getTime();
+    const differenceInDays = differenceInMilliseconds / (1000 * 60 * 60 * 24); // Convert milliseconds to days
+
+    return differenceInDays;
+  }
 
   console.log(jobs);
 
@@ -79,28 +120,32 @@ const Jobs = () => {
             <Image src={manage} height={90} width={90} alt="Job Logo" />
             <div className="ml-4">
               <div className="flex gap-3">
-                <h3>Company name</h3>
-                <span className="h-7 rounded-2xl bg-green-500 p-1 text-sm text-white">
-                  NEW!
-                </span>
-                <span className="h-7 items-center justify-center rounded-2xl bg-gray-900 p-1 text-sm text-white">
-                  FEATURED
-                </span>
+                <h3>{doc.companyName}</h3>
+                {howOldIsJob(doc.formattedDate) > 5 && (
+                  <span className="h-7 rounded-2xl bg-green-500 p-1 text-sm text-white">
+                    NEW!
+                  </span>
+                )}
+                {doc.featured && (
+                  <span className="h-7 items-center justify-center rounded-2xl bg-gray-900 p-1 text-sm text-white">
+                    FEATURED
+                  </span>
+                )}
               </div>
-              <h2>Job title</h2>
+              <h2>{doc.title}</h2>
               <ul className="flex gap-3">
-                <li>1d ago</li>
-                <li>Full time</li>
-                <li>Remote</li>
+                <li>{doc.formattedDate}</li>
+                <li>{doc.roleType}</li>
+                <li>{doc.location}</li>
               </ul>
             </div>
           </div>
           <ul className="flex flex-wrap items-center justify-center gap-3 border-t border-black pt-2 lg:flex-1 lg:justify-end lg:border-none lg:pt-0">
-            <li className="rounded-md bg-gray-300 p-1 text-sm">Frontend</li>
-            <li className="rounded-md bg-gray-300 p-1 text-sm">Senior</li>
-            <li className="rounded-md bg-gray-300 p-1 text-sm">HTML</li>
-            <li className="rounded-md bg-gray-300 p-1 text-sm">CSS</li>
-            <li className="rounded-md bg-gray-300 p-1 text-sm">JavaScript</li>
+            {doc.roles.map((role) => (
+              <li key={role} className="rounded-md bg-gray-300 p-1 text-sm">
+                {role}
+              </li>
+            ))}
           </ul>
         </div>
       ))}
