@@ -6,23 +6,8 @@ import { initializeApp } from "firebase/app";
 import manage from "../assets/images/manage.svg";
 import { collection, getDocs, getFirestore } from "firebase/firestore";
 import { useEffect, useState } from "react";
-
-interface JobPosting {
-  id: string;
-  companyName: string;
-  title: string;
-  description: string;
-  roles: string[];
-  roleType: string;
-  image: string;
-  location: string;
-  featured: boolean;
-  createdAt: {
-    seconds: number;
-    nanoseconds: number;
-  };
-  formattedDate: string;
-}
+import { JobPosting } from "@/lib/types";
+import JobModal from "./JobModal";
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -42,7 +27,13 @@ const colRef = collection(db, "jobs");
 const Jobs = () => {
   const [jobs, setJobs] = useState<JobPosting[]>([]);
   const [error, setError] = useState<Error | null>(null);
+  const [openModal, setOpenModal] = useState(false);
 
+  const handleOpenModal = () => {
+    setOpenModal(!openModal);
+  };
+
+  // Get Jobs
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -91,12 +82,13 @@ const Jobs = () => {
     return differenceInDays;
   }
 
-  console.log(jobs);
-
   return (
-    <div className="b flex w-full flex-col items-center">
+    <div className="flex w-full flex-col items-center">
+      {openModal && <JobModal setOpenModal={setOpenModal} />}
       <h1 className="text-2xl font-medium">Jobs</h1>
-      <p className="flex w-full justify-end">Post Job</p>
+      <button className="flex w-full justify-end" onClick={handleOpenModal}>
+        Post Job
+      </button>
       {jobs.map((doc) => (
         <div
           key={doc.id}
