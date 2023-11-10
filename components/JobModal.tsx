@@ -224,6 +224,19 @@ const JobModal = ({ setOpenModal }: any) => {
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="location"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Location</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Location" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <Button type="submit">Submit</Button>
           </form>
         </Form>
