@@ -22,6 +22,7 @@ import { JobPosting } from "@/lib/types";
 import { postJob } from "@/lib/firebaseService";
 import { ZodError } from "zod";
 import { toast } from "./ui/use-toast";
+import { useSession } from "next-auth/react";
 
 const jobRoles = [
   {
@@ -52,6 +53,7 @@ const jobRoles = [
 
 const JobModal = ({ setOpenModal, setError }: any) => {
   const [formSubmitting, setFormSubmitting] = useState(false);
+  const { data: session } = useSession();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -64,6 +66,7 @@ const JobModal = ({ setOpenModal, setError }: any) => {
       location: "",
       description: "",
       featured: false,
+      createdBy: session?.user?.email ?? "",
     },
   });
 
@@ -75,7 +78,7 @@ const JobModal = ({ setOpenModal, setError }: any) => {
 
   return (
     <div className="fixed left-0 top-0 flex h-full w-full items-center justify-center">
-      <div className="max-w-84 z-40 rounded-lg bg-white p-5 shadow-2xl">
+      <div className="max-w-84 z-40 h-96 overflow-auto rounded-lg bg-white p-5 shadow-2xl">
         <button
           onClick={() => setOpenModal(false)}
           disabled={formSubmitting}

@@ -55,7 +55,7 @@ const Jobs = () => {
         <JobModal setOpenModal={setOpenModal} setError={setError} />
       )}
       <h1 className="text-2xl font-medium">Jobs</h1>
-      <div className="flex w-full justify-end">
+      <div className="flex  justify-end">
         <button onClick={handleOpenModal}>Post Job</button>
       </div>
       {jobs.map((job) => (
