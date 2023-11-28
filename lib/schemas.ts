@@ -22,9 +22,9 @@ export const formSchema = z.object({
   description: z.string().min(2, {
     message: "Description must be at least 2 characters.",
   }),
-  featured: z.boolean(),
-  createdBy: z.string().min(2)
+  createdBy: z.string().min(2, {
+    message: "createdBy must be at least 2 characters.",
+  }),
+  // createdAt: z.date().safeParse(new Date()),
+  // updatedAt: z.date().safeParse(new Date()),
 });
-
-// createdAt: z.date().safeParse(new Date()),
-// updatedAt: z.date().safeParse(new Date()),

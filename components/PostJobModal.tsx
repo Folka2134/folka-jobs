@@ -24,6 +24,8 @@ import { ZodError } from "zod";
 import { toast } from "./ui/use-toast";
 import { useSession } from "next-auth/react";
 
+import TestForm from "@/components/testForm";
+
 const jobRoles = [
   {
     id: "frontend",
@@ -61,24 +63,25 @@ const JobModal = ({ setOpenModal, setError }: any) => {
       image: "",
       companyName: "",
       title: "",
-      roleType: "Full-time",
       roles: [],
+      roleType: "Full-time",
       location: "",
       description: "",
-      featured: false,
       createdBy: session?.user?.email ?? "",
+      // createdAt: new Date(),
+      // updatedAt: new Date(),
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values.location);
+    console.log(values);
   }
 
   return (
-    <div className="fixed left-0 top-0 flex h-full w-full items-center justify-center">
-      <div className="max-w-84 z-40 h-96 overflow-auto rounded-lg bg-white p-5 shadow-2xl">
+    <div className="fixed left-0 top-0 flex h-full w-full  items-center justify-center">
+      <div className="max-w-84 z-40 h-96 min-w-[400px] overflow-auto rounded-lg bg-white p-5 shadow-2xl">
         <button
           onClick={() => setOpenModal(false)}
           disabled={formSubmitting}
@@ -157,7 +160,7 @@ const JobModal = ({ setOpenModal, setError }: any) => {
                                     ? field.onChange([...field.value, role.id])
                                     : field.onChange(
                                         field.value?.filter(
-                                          (value) => value !== role.id,
+                                          (value: string) => value !== role.id,
                                         ),
                                       );
                                 }}
@@ -213,6 +216,19 @@ const JobModal = ({ setOpenModal, setError }: any) => {
                   <FormLabel>Location</FormLabel>
                   <FormControl>
                     <Input placeholder="Location" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Description" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
