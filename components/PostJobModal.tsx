@@ -24,8 +24,6 @@ import { ZodError } from "zod";
 import { toast } from "./ui/use-toast";
 import { useSession } from "next-auth/react";
 
-import TestForm from "@/components/testForm";
-
 const jobRoles = [
   {
     id: "frontend",
@@ -68,7 +66,7 @@ const JobModal = ({ setOpenModal, setError }: any) => {
       location: "",
       description: "",
       createdBy: session?.user?.email ?? "",
-      // createdAt: new Date(),
+      createdAt: new Date(),
       // updatedAt: new Date(),
     },
   });
