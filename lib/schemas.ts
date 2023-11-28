@@ -23,6 +23,7 @@ export const formSchema = z.object({
     message: "Description must be at least 2 characters.",
   }),
   featured: z.boolean(),
+  createdBy: z.string().min(2)
 });
 
 // createdAt: z.date().safeParse(new Date()),
