@@ -51,9 +51,14 @@ const jobRoles = [
   },
 ] as const;
 
-const JobModal = ({ setOpenModal, setError }: any) => {
+const JobModal = ({ setOpenModal }: any) => {
   const [formSubmitting, setFormSubmitting] = useState(false);
   const { data: session } = useSession();
+
+  const {
+    setError,
+    formState: { errors },
+  } = useForm();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
