@@ -44,7 +44,7 @@ export const getJobs = async () => {
   }
 };
 
-export const postJob = async (jobData : JobPosting) => {
+export const postJob = async (jobData: any) => {
   try {
     const jobCollection = collection(fireBasedb, "jobs")
     const docRef = await addDoc(jobCollection, jobData)

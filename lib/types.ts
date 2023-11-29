@@ -8,9 +8,9 @@ export interface JobPosting {
   image: string;
   location: string;
   featured: boolean;
-  createdAt: {
-    seconds: number;
-    nanoseconds: number;
-  };
+  // createdAt: {
+  //   seconds: number;
+  //   nanoseconds: number;
+  // };
   formattedDate: string;
 }
