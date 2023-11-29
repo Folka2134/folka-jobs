@@ -87,7 +87,7 @@ const JobModal = ({ setOpenModal }: any) => {
         <button
           onClick={() => setOpenModal(false)}
           disabled={formSubmitting}
-          className="my-2 mb-6 flex h-8 w-20 items-center justify-center gap-2 text-sm shadow-xl md:mb-2"
+          className="my-2 mb-6 flex h-8 w-20 items-center justify-center gap-2 rounded-lg bg-black text-sm text-white shadow-xl md:mb-2"
         >
           Cancel
         </button>
@@ -236,7 +236,9 @@ const JobModal = ({ setOpenModal }: any) => {
                 </FormItem>
               )}
             />
-            <Button type="submit">Submit</Button>
+            <Button type="submit" className="rounded-lg bg-black text-white">
+              Submit
+            </Button>
           </form>
         </Form>
       </div>
