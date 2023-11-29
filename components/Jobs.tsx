@@ -62,7 +62,7 @@ const Jobs = () => {
         <Link key={job.id} href={`/job/${job.id}`}>
           <div
             key={job.id}
-            className="flex h-56 w-full min-w-[370px] flex-col justify-evenly p-5 shadow-2xl lg:h-32 lg:flex-row"
+            className="flex h-56 w-[400px] flex-col justify-evenly p-5 shadow-2xl md:w-[500px] lg:h-32 lg:w-[900px] lg:flex-row"
           >
             <div className="flex items-center lg:flex-1">
               <Image src={manage} height={90} width={90} alt="Job Logo" />
