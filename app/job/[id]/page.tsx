@@ -1,3 +1,4 @@
+import EditBar from "@/components/EditBar";
 import { fireBasedb } from "@/lib/firebaseService";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import React from "react";
@@ -21,6 +22,7 @@ const JobPage = async ({ params }: { params: { id: string } }) => {
     <div>
       <h1>Job Details</h1>
       <p>Job ID: {params.id}</p>
+      <EditBar />
     </div>
   );
 };
