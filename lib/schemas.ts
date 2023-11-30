@@ -25,5 +25,6 @@ export const formSchema = z.object({
   createdBy: z.string().min(2, {
     message: "createdBy must be at least 2 characters.",
   }),
-  createdAt: z.date()
+  createdAt: z.date(),
+  usersApplied: z.string().array()
 });

@@ -13,7 +13,11 @@ const JobPage = async ({ params }: { params: { id: string } }) => {
       <h1>Job Details</h1>
       <p>Job ID: {params.id}</p>
       <p>{job.title}</p>
-      <EditBar id={params.id} createdBy={job.createdBy} />
+      <EditBar
+        applicants={job.usersApplied}
+        id={params.id}
+        createdBy={job.createdBy}
+      />
     </div>
   );
 };

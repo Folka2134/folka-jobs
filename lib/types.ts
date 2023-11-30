@@ -14,4 +14,5 @@ export interface JobPosting {
   };
   formattedDate: string;
   createdBy: string
+  usersApplied: string[]
 }

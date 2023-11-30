@@ -72,7 +72,7 @@ const JobModal = ({ setOpenModal }: any) => {
       description: "",
       createdBy: session?.user?.email ?? "",
       createdAt: new Date(),
-      // updatedAt: new Date(),
+      usersApplied: [],
     },
   });
 

@@ -1,7 +1,7 @@
 // firebaseService.ts
 
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, addDoc, getDocs, getDoc, doc, deleteDoc } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, getDocs, getDoc, doc, deleteDoc, updateDoc, arrayUnion } from 'firebase/firestore';
 import { JobPosting } from './types';
 
 const firebaseConfig = {
@@ -35,7 +35,8 @@ export const getJobs = async () => {
       featured: doc.data().featured,
       createdAt: doc.data().createdAt,
       formattedDate: new Date(doc.data().createdAt.seconds * 1000).toLocaleDateString(),
-      createdBy: doc.data().createdBy
+      createdBy: doc.data().createdBy,
+      usersApplied: doc.data().usersApplied
     }))
 
     return jobPostings
@@ -69,7 +70,8 @@ export const getJobById = async (jobId: string) => {
       featured: jobData.featured,
       createdAt: jobData.createdAt,
       formattedDate: new Date(jobData.createdAt.seconds * 1000).toLocaleDateString(),
-      createdBy: jobData.createdBy
+      createdBy: jobData.createdBy,
+      usersApplied: jobData.usersApplied
     };
 
     return jobPosting;
@@ -102,3 +104,14 @@ export const deleteJob = async (jobId: string) => {
     throw error;
   }
 };
+
+export const applyToJob = async (jobId: string, email : string) => {
+  try {
+    const docRef = doc(fireBasedb, 'jobs', jobId);
+    await updateDoc(docRef, { usersApplied: arrayUnion(email) });
+    console.log("Application successful!");
+  } catch (error) {
+    console.error(`Error applying to the job posting:`, error);
+    throw error;
+  }
+}
