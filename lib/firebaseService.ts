@@ -21,9 +21,9 @@ export const fireBasedb = getFirestore(fireBaseApp);
 export const getJobs = async () => {
   try {
     const colRef = collection(fireBasedb, "jobs")
-    const snapshot = await getDocs(colRef)
+    const colSnapshot = await getDocs(colRef)
 
-    const jobPostings: JobPosting[] = snapshot.docs.map((doc) => ({
+    const jobPostings: JobPosting[] = colSnapshot.docs.map((doc) => ({
       id: doc.id,
       companyName: doc.data().companyName,
       title: doc.data().title,
@@ -40,7 +40,7 @@ export const getJobs = async () => {
 
     return jobPostings
   } catch (error) {
-    console.error("Error fetching countries:", error);
+    console.error("Error fetching jobs:", error);
     throw error
   }
 };
