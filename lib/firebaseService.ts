@@ -93,10 +93,14 @@ export const postJob = async (jobData: any) => {
   }
 }
 
-export const deleteJob = async (jobId: string) => {
+export const deleteJob = async (jobId: string, onSuccess?: () => void) => {
   try {
     const docRef = doc(fireBasedb, 'jobs', jobId);
     await deleteDoc(docRef);
+
+    if (onSuccess) {
+      onSuccess();
+    }
 
     console.log(`Job with ID ${jobId} successfully deleted`);
   } catch (error) {
