@@ -12,17 +12,26 @@ import manage from "../assets/images/manage.svg";
 import { Router } from "next/router";
 import Link from "next/link";
 import { Searchbar } from "./Searchbar";
+import { Input } from "./ui/input";
 
 const Jobs = () => {
-  const {
-    register,
-    handleSubmit,
-    setError,
-    formState: { errors },
-  } = useForm();
   const [jobs, setJobs] = useState<JobPosting[]>([]);
   const [openModal, setOpenModal] = useState(false);
-  // const [error, setError] = useState<Error | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filterJobs = (jobs: any, searchTerm: any) => {
+    return jobs.filter((job: any) =>
+      job.roles.some((role: any) =>
+        role.toLowerCase().includes(searchTerm.toLowerCase()),
+      ),
+    );
+  };
+
+  const handleSearchChange = (event: any) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredJobs = filterJobs(jobs, searchTerm);
 
   // Get Jobs
   useEffect(() => {
@@ -52,16 +61,21 @@ const Jobs = () => {
 
   return (
     <div className="flex w-[400px] flex-col items-center md:w-[500px] lg:w-[900px]">
-      {openModal && (
-        <JobModal setOpenModal={setOpenModal} setError={setError} />
-      )}
+      {openModal && <JobModal setOpenModal={setOpenModal} />}
       <h1 className="text-2xl font-medium">Jobs</h1>
-      <div className="my-5 flex w-full justify-between">
-        <Searchbar />
+      <div className="my-5 flex  justify-between">
+        {/* <Searchbar /> */}
+        <Input
+          type="search"
+          placeholder="Search role"
+          className="max-w-96 outline-none"
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
         <button onClick={handleOpenModal}>Post Job</button>
       </div>
       <div className="flex w-full flex-col gap-12  ">
-        {jobs.map((job) => (
+        {filteredJobs.map((job: any) => (
           <Link key={job.id} href={`/job/${job.id}`}>
             <div
               key={job.id}
@@ -92,7 +106,7 @@ const Jobs = () => {
                 </div>
               </div>
               <ul className="flex flex-wrap items-center justify-center gap-3 border-t border-black pt-2 lg:flex-1 lg:justify-end lg:border-none lg:pt-0">
-                {job.roles.map((role) => (
+                {job.roles.map((role: any) => (
                   <li key={role} className="rounded-md bg-gray-300 p-1 text-sm">
                     {role}
                   </li>

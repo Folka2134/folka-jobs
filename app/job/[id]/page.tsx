@@ -6,7 +6,7 @@ import React from "react";
 const JobPage = async ({ params }: { params: { id: string } }) => {
   const job = await getJobById(params.id);
 
-  console.log(job);
+  // console.log(job);
 
   return (
     <div>

@@ -18,35 +18,32 @@ import { Button } from "./ui/button";
 import { Checkbox } from "./ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { formSchema } from "@/lib/schemas";
-import { JobPosting } from "@/lib/types";
 import { postJob } from "@/lib/firebaseService";
-import { ZodError } from "zod";
-import { toast } from "./ui/use-toast";
 import { useSession } from "next-auth/react";
 
 const jobRoles = [
   {
-    id: "frontend",
+    id: "Frontend",
     label: "Front-End",
   },
   {
-    id: "backend",
+    id: "Backend",
     label: "Back-end",
   },
   {
-    id: "fullstack",
+    id: "Fullstack",
     label: "Fullstack",
   },
   {
-    id: "devops",
+    id: "Devops",
     label: "Devops",
   },
   {
-    id: "senior",
+    id: "Senior",
     label: "Senior",
   },
   {
-    id: "junior",
+    id: "Junior",
     label: "Junior",
   },
 ] as const;
