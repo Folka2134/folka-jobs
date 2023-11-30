@@ -81,12 +81,17 @@ export const getJobById = async (jobId: string) => {
   }
 };
 
-export const postJob = async (jobData: any) => {
+export const postJob = async (jobData: any, onSuccess?: () => void) => {
   try {
     const jobCollection = collection(fireBasedb, "jobs")
     const docRef = await addDoc(jobCollection, jobData)
+    
+    if (onSuccess) {
+      onSuccess();
+    }
+    
     console.log("Document written with ID: ", docRef.id);
-    return docRef.id
+    // return docRef.id
   } catch (error) {
     console.log("Error adding document: ", error);
     throw error

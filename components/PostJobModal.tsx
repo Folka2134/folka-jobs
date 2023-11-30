@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -73,10 +73,18 @@ const JobModal = ({ setOpenModal }: any) => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    postJob(values);
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      await postJob(values, () => {
+        window.location.reload();
+      });
+    } catch (error) {
+      // Handle error, if needed
+    }
+
+    // postJob(values);
     // console.log(values);
-  }
+  };
 
   return (
     <div className="fixed left-0 top-0 flex h-full w-full  items-center justify-center">

@@ -1,9 +1,7 @@
 "use client";
 
 import EditBar from "@/components/EditBar";
-import { fireBasedb, getJobById } from "@/lib/firebaseService";
-import { collection, getDocs, query, where } from "firebase/firestore";
-import { useRouter } from "next/navigation";
+import { getJobById } from "@/lib/firebaseService";
 import React, { useEffect, useState } from "react";
 
 interface Job {

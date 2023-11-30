@@ -63,7 +63,7 @@ const Jobs = () => {
     <div className="flex w-[400px] flex-col items-center md:w-[500px] lg:w-[900px]">
       {openModal && <JobModal setOpenModal={setOpenModal} />}
       <h1 className="text-2xl font-medium">Jobs</h1>
-      <div className="my-5 flex  justify-between">
+      <div className="my-5 flex justify-between">
         {/* <Searchbar /> */}
         <Input
           type="search"
