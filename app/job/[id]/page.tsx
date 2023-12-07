@@ -26,10 +26,8 @@ const JobPage = ({ params }: { params: { id: string } }) => {
     fetchData();
   }, []);
 
-  console.log(job);
-
   return (
-    <div>
+    <div className="">
       <h1>Job Details</h1>
       <p>Job ID: {params.id}</p>
       <p>{job?.title}</p>

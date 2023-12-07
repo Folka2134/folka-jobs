@@ -50,25 +50,24 @@ const Jobs = () => {
     setOpenModal(!openModal);
   };
 
-  const howOldIsJob = (formattedDate: string): number => {
-    const jobDate = new Date(formattedDate);
-    const currentDate = new Date();
-    const differenceInMilliseconds = currentDate.getTime() - jobDate.getTime();
-    const differenceInDays = differenceInMilliseconds / (1000 * 60 * 60 * 24); // Convert milliseconds to days
+  // const howOldIsJob = (formattedDate: string): number => {
+  //   const jobDate = new Date(formattedDate);
+  //   const currentDate = new Date();
+  //   const differenceInMilliseconds = currentDate.getTime() - jobDate.getTime();
+  //   const differenceInDays = differenceInMilliseconds / (1000 * 60 * 60 * 24); // Convert milliseconds to days
 
-    return differenceInDays;
-  };
+  //   return differenceInDays;
+  // };
 
   return (
     <div className="flex w-[400px] flex-col items-center md:w-[500px] lg:w-[900px]">
       {openModal && <JobModal setOpenModal={setOpenModal} />}
       <h1 className="text-2xl font-medium">Jobs</h1>
-      <div className="my-5 flex justify-between">
-        {/* <Searchbar /> */}
+      <div className="my-5 flex w-full justify-between">
         <Input
           type="search"
           placeholder="Search role"
-          className="max-w-96 outline-none"
+          className="w-52 outline-none"
           value={searchTerm}
           onChange={handleSearchChange}
         />
@@ -86,11 +85,11 @@ const Jobs = () => {
                 <div className="ml-4">
                   <div className="flex gap-3">
                     <h3>{job.companyName}</h3>
-                    {howOldIsJob(job.formattedDate) > 5 && (
+                    {/* {howOldIsJob(job.formattedDate) > 5 && (
                       <span className="h-7 rounded-2xl bg-green-500 p-1 text-sm text-white">
                         NEW!
                       </span>
-                    )}
+                    )} */}
                     {job.featured && (
                       <span className="h-7 items-center justify-center rounded-2xl bg-gray-900 p-1 text-sm text-white">
                         FEATURED
