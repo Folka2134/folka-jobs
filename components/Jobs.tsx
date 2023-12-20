@@ -10,6 +10,7 @@ import JobModal from "./PostJobModal";
 import manage from "../assets/images/manage.svg";
 import Link from "next/link";
 import { Input } from "./ui/input";
+import { getJobs } from "@/lib/firebaseService";
 
 const Jobs = () => {
   const [jobs, setJobs] = useState<JobPosting[]>([]);

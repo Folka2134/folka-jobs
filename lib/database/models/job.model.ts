@@ -32,6 +32,6 @@ const JobSchema = new Schema({
   startDateTime: { type: Date, default: Date.now },
 })
 
-const Event = models.Event || model("Event", JobSchema)
+const Job = models.Event || model("Event", JobSchema)
 
-export default Event
+export default Job
