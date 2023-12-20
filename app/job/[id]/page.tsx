@@ -1,6 +1,6 @@
 "use client";
 
-import EditBar from "@/components/EditBar";
+// import EditBar from "@/components/EditBar";
 import { getJobById } from "@/lib/firebaseService";
 import React, { useEffect, useState } from "react";
 
@@ -31,11 +31,11 @@ const JobPage = ({ params }: { params: { id: string } }) => {
       <h1>Job Details</h1>
       <p>Job ID: {params.id}</p>
       <p>{job?.title}</p>
-      <EditBar
+      {/* <EditBar
         applicants={job?.usersApplied}
         id={params.id}
         createdBy={job?.createdBy}
-      />
+      /> */}
     </div>
   );
 };
