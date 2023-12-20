@@ -19,7 +19,6 @@ import { Checkbox } from "./ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { formSchema } from "@/lib/schemas";
 import { postJob } from "@/lib/firebaseService";
-import { useSession } from "next-auth/react";
 
 const jobRoles = [
   {
@@ -50,7 +49,7 @@ const jobRoles = [
 
 const JobModal = ({ setOpenModal }: any) => {
   const [formSubmitting, setFormSubmitting] = useState(false);
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
 
   const {
     setError,
@@ -67,7 +66,7 @@ const JobModal = ({ setOpenModal }: any) => {
       roleType: "Full-time",
       location: "",
       description: "",
-      createdBy: session?.user?.email ?? "",
+      // createdBy: session?.user?.email ?? "",
       createdAt: new Date(),
       usersApplied: [],
     },

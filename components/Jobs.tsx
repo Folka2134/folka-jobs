@@ -5,13 +5,10 @@ import { useForm } from "react-hook-form";
 import Image from "next/image";
 
 import { JobPosting } from "@/lib/types";
-import { getJobs } from "@/lib/firebaseService";
 import JobModal from "./PostJobModal";
 
 import manage from "../assets/images/manage.svg";
-import { Router } from "next/router";
 import Link from "next/link";
-import { Searchbar } from "./Searchbar";
 import { Input } from "./ui/input";
 
 const Jobs = () => {
