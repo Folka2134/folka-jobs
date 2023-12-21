@@ -5,7 +5,7 @@ export const headerLinks = [
   },
   {
     label: 'Create Job',
-    route: '/events/create',
+    route: '/jobs/create',
   },
   {
     label: 'My Profile',
