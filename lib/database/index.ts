@@ -10,7 +10,7 @@ export const connectToDatabase = async () => {
   if(!MONGODB_URI) throw new Error("MONGODB_URI is not defined");
 
   cached.promise = cached.promise || mongoose.connect(MONGODB_URI, {
-    dbName:"folka_events",
+    dbName:"folka-events",
     bufferCommands: false
   })
   
